@@ -11,7 +11,18 @@ namespace shoppingcartappusingasp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                if (Session["Cart"] != null)
+                {
+                    GridView1.DataSource = (DataTable)Session["Cart"];
+                    GridView1.DataBind();
+                }
+                else
+                {
+                    EmptyCartLabel.Visible = true;
+                }
+            }
         }
     }
 }

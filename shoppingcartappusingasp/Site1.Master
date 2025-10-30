@@ -2,14 +2,29 @@
 
 <!DOCTYPE html>
 <html>
-<head id="Head1" runat="server">
+<head runat="server" id="Head1">
     <title>Shopping Cart</title>
     <link href="App_Themes/Default/Style.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
 <form id="form1" runat="server">
+    <!-- Header Section -->
     <div class="header">
         <h1>🛒 My Shopping Cart</h1>
+        <div style="float:right; margin-top:-40px;">
+            <asp:LoginView ID="LoginView1" runat="server">
+                <AnonymousTemplate>
+                    <a href="~/Login.aspx">Login</a> |
+                    <a href="~/Register.aspx">Register</a>
+                </AnonymousTemplate>
+                <LoggedInTemplate>
+                    Hello, <asp:LoginName ID="LoginName1" runat="server" /> |
+                    <a href="~/Logout.aspx">Logout</a>
+                </LoggedInTemplate>
+            </asp:LoginView>
+        </div>
+        <div style="clear:both;"></div>
         <asp:Menu ID="MainMenu" runat="server" Orientation="Horizontal">
             <Items>
                 <asp:MenuItem Text="Home" NavigateUrl="~/Home.aspx" />
@@ -19,8 +34,15 @@
         </asp:Menu>
     </div>
 
-    <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-    <div class="footer">© 2025 Shopping Cart App</div>
+    <!-- Page Content -->
+    <div class="content">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        © 2025 Shopping Cart App
+    </div>
 </form>
 </body>
 </html>
