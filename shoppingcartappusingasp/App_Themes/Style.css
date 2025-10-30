@@ -2,5 +2,5 @@
 .header { background-color: #333; color: white; padding: 15px; }
 .header a { color: #ffcc00; text-decoration: none; margin: 0 5px; }
 .header a:hover { text-decoration: underline; }
-.content { padding: 20px; min-height: 400px; background: #fff; margin: 10px; border-radius: 8px; }
+.content { padding: 20px; min-height: 400px; background: #fff; margin: 10px;}
 .footer { background-color: #333; color: white; text-align: center; padding: 10px; }

@@ -15,7 +15,7 @@ namespace shoppingcartappusingasp
             {
                 if (Session["Cart"] != null)
                 {
-                    GridView1.DataSource = (DataTable)Session["Cart"];
+                    //GridView1.DataSource = (DataTable)Session["Cart"];
                     GridView1.DataBind();
                 }
                 else
