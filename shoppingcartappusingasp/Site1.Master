@@ -1,0 +1,26 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="shoppingcartappusingasp.Site1" %>
+
+<!DOCTYPE html>
+<html>
+<head id="Head1" runat="server">
+    <title>Shopping Cart</title>
+    <link href="App_Themes/Default/Style.css" rel="stylesheet" />
+</head>
+<body>
+<form id="form1" runat="server">
+    <div class="header">
+        <h1>🛒 My Shopping Cart</h1>
+        <asp:Menu ID="MainMenu" runat="server" Orientation="Horizontal">
+            <Items>
+                <asp:MenuItem Text="Home" NavigateUrl="~/Home.aspx" />
+                <asp:MenuItem Text="Products" NavigateUrl="~/Products.aspx" />
+                <asp:MenuItem Text="Cart" NavigateUrl="~/Cart.aspx" />
+            </Items>
+        </asp:Menu>
+    </div>
+
+    <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    <div class="footer">© 2025 Shopping Cart App</div>
+</form>
+</body>
+</html>
