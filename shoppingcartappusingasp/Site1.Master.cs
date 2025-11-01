@@ -11,7 +11,13 @@ namespace shoppingcartappusingasp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+        }
 
+        protected void Logout_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect("~/Login.aspx");
         }
     }
 }
