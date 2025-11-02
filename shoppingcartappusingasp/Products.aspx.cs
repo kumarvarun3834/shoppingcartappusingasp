@@ -2,6 +2,9 @@
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace shoppingcartappusingasp
 {
@@ -29,21 +32,46 @@ namespace shoppingcartappusingasp
 
         private void BindProducts()
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("ID", typeof(int));
-            dt.Columns.Add("Name", typeof(string));
-            dt.Columns.Add("Price", typeof(decimal));
+            try
+            {
+                string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-            dt.Rows.Add(1, "Wireless Mouse", 599.00m);
-            dt.Rows.Add(2, "USB Keyboard", 799.00m);
-            dt.Rows.Add(3, "Headphones", 999.00m);
-            dt.Rows.Add(4, "Webcam", 1299.00m);
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    con.Open();
 
-            ProductList.DataSource = dt;
-            ProductList.DataBind();
+                    string query = "SELECT ID, Name, Price FROM Products ORDER BY ID";
+                    SqlDataAdapter da = new SqlDataAdapter(query, con);
 
-            Session["Products"] = dt;
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        ProductList.DataSource = dt;
+                        ProductList.DataBind();
+
+                        // Save to session for cart reference
+                        Session["Products"] = dt;
+                    }
+                    else
+                    {
+                        // If no products, show placeholder
+                        ProductList.DataSource = null;
+                        ProductList.DataBind();
+
+                        // Optional: show a message if you have a Label control like lblMessage
+                        lblMessage.Text = "No products available.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any SQL or config errors gracefully
+                lblMessage.Text = "Error loading products: " + ex.Message;
+            }
         }
+
 
         protected void ProductList_ItemCommand(object source, RepeaterCommandEventArgs e)
         {

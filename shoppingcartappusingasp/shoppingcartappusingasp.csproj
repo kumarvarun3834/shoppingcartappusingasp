@@ -56,6 +56,10 @@
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="App_Data\ShoppingCartDB.mdf" />
+    <Content Include="App_Data\ShoppingCartDB_log.ldf">
+      <DependentUpon>ShoppingCartDB.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Themes\Style.css" />
     <Content Include="Cart.aspx" />
     <Content Include="Home.aspx" />
@@ -183,9 +187,7 @@
       <DependentUpon>Site1.Master</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Account\Web.config" />
     <Content Include="Site.Master" />

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Security;
+
 
 namespace shoppingcartappusingasp
 {
@@ -11,7 +13,17 @@ namespace shoppingcartappusingasp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+        }
 
+        protected void CreateUserWizard1_CreatedUser(object sender, EventArgs e)
+        {
+            var user = Membership.GetUser(CreateUserWizard1.UserName);
+            string role = ((RadioButtonList)CreateUserWizard1.FindControl("RoleList")).SelectedValue;
+
+            if (!Roles.RoleExists(role))
+                Roles.CreateRole(role);
+
+            Roles.AddUserToRole(user.UserName, role);
         }
     }
 }
