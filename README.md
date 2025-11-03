@@ -23,7 +23,7 @@
 * Design the database tables:
 
   * `Users(UserID, Username, Password, Email)`
-  * `Products(ProductID, Name, Price, Image)`
+  * `Products(ProductID, Name, Price)`
   * `Cart(UserID, ProductID, Quantity, TotalPrice)`
 * Plan the site layout and navigation.
 
@@ -89,7 +89,7 @@
 * **Register.aspx** – for new users
 * **Login.aspx** – to authenticate
 * **Products.aspx** – list items using Repeater or GridView
-* **Cart.aspx** – display selected products from Session or DB
+* **Cart.aspx** – display selected products from Session 
 
 Each content page uses:
 
