@@ -75,34 +75,64 @@ namespace shoppingcartappusingasp
 
         protected void ProductList_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
+            int productId = Convert.ToInt32(e.CommandArgument);
+            DataTable products = (DataTable)Session["Products"];
+            DataTable cart = (DataTable)Session["Cart"];
+
+            DataRow[] selected = products.Select("ID = " + productId);
+            if (selected.Length == 0) return;
+            DataRow product = selected[0];
+
+            Label qtyLabel = (Label)e.Item.FindControl("QtyLabel");
+            int currentQty = 0;
+
+            DataRow[] existing = cart.Select("ProductID = " + productId);
+            if (existing.Length > 0)
+                currentQty = Convert.ToInt32(existing[0]["Quantity"]);
+
             if (e.CommandName == "AddToCart")
             {
-                int productId = Convert.ToInt32(e.CommandArgument);
-                DataTable products = (DataTable)Session["Products"];
-                DataRow[] selected = products.Select("ID = " + productId);
-
-                if (selected.Length > 0)
+                if (existing.Length > 0)
                 {
-                    DataRow p = selected[0];
-                    DataTable cart = (DataTable)Session["Cart"];
+                    currentQty++;
+                    existing[0]["Quantity"] = currentQty;
+                    existing[0]["Total"] = currentQty * Convert.ToDecimal(existing[0]["Price"]);
+                }
+                else
+                {
+                    currentQty = 1;
+                    cart.Rows.Add(product["ID"], product["Name"], currentQty, product["Price"], currentQty * Convert.ToDecimal(product["Price"]));
+                }
 
-                    // ✅ Check if item already exists in cart
-                    DataRow[] existing = cart.Select("ProductID = " + productId);
-                    if (existing.Length > 0)
+                lblMessage.Text = string.Format("{0} item(s) in cart!", currentQty);
+            }
+            else if (e.CommandName == "RemoveFromCart")
+            {
+                if (existing.Length > 0)
+                {
+                    currentQty--;
+                    if (currentQty <= 0)
                     {
-                        existing[0]["Quantity"] = (int)existing[0]["Quantity"] + 1;
-                        existing[0]["Total"] = Convert.ToInt32(existing[0]["Quantity"]) * Convert.ToDecimal(existing[0]["Price"]);
-
+                        cart.Rows.Remove(existing[0]);
+                        currentQty = 0;
                     }
                     else
                     {
-                        cart.Rows.Add(p["ID"], p["Name"], 1, p["Price"], p["Price"]);
+                        existing[0]["Quantity"] = currentQty;
+                        existing[0]["Total"] = currentQty * Convert.ToDecimal(existing[0]["Price"]);
                     }
 
-                    Session["Cart"] = cart;
-                    lblMessage.Text =  "added to cart!";
+                    lblMessage.Text = string.Format("{0} updated to {1} item(s).", product["Name"], currentQty);
                 }
             }
+
+            qtyLabel.Text = currentQty.ToString();
+
+            Button removeBtn = (Button)e.Item.FindControl("RemoveBtn");
+            if (removeBtn != null)
+                removeBtn.Enabled = currentQty > 0;
+
+            Session["Cart"] = cart;
         }
     }
 }

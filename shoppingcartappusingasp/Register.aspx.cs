@@ -18,12 +18,15 @@ namespace shoppingcartappusingasp
         protected void CreateUserWizard1_CreatedUser(object sender, EventArgs e)
         {
             var user = Membership.GetUser(CreateUserWizard1.UserName);
-            String role = ((RadioButtonList)CreateUserWizard1.FindControl("RoleList")).SelectedValue;
+            RadioButtonList roleList = (RadioButtonList)CreateUserWizard1.CreateUserStep.ContentTemplateContainer.FindControl("RoleList");
+            string role = roleList != null ? roleList.SelectedValue : "user";
+
 
             //if (!Roles.RoleExists(role))
              //   Roles.CreateRole(role);
 
-            Roles.AddUserToRole(user.UserName, role);
+            Roles.AddUserToRole(CreateUserWizard1.UserName, role);
+            CreateUserWizard1.ActiveStepIndex = CreateUserWizard1.WizardSteps.Count - 1;
         }
     }
 }
