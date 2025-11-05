@@ -9,6 +9,13 @@ namespace shoppingcartappusingasp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // ✅ Check for login
+            if (Session["User"] == null)
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
             if (!IsPostBack)
             {
                 BindCartData();

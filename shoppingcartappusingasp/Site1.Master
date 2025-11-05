@@ -3,51 +3,175 @@
 <!DOCTYPE html>
 <html>
 <head runat="server" id="Head1">
-    <title>Shopping Cart</title>
-    <link href="App_Themes/Default/Style.css" rel="stylesheet" />
+    <title>ShopEase</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style type="text/css">
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fff7c2;
+        }
+
+        /* Header */
+        .header {
+            background-color: #ffe84a;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #1a1a1a;
+            font-weight: 700;
+        }
+
+        /* Navigation Menu */
+        .nav {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav li a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .nav li a:hover {
+            color: #ff3333;
+        }
+
+        /* Page Content */
+        .content {
+            padding: 40px;
+            background-color: #fff6b3;
+            min-height: calc(100vh - 140px);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #ffe84a;
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* Login/Logout Section */
+        .auth-links {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .auth-links a, .auth-links asp\:LinkButton {
+            color: #000;
+            text-decoration: none;
+            margin: 0 6px;
+        }
+
+        .auth-links a:hover {
+            color: #ff3333;
+        }
+        .about-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            line-height: 1.8;
+            font-family: 'Segoe UI', sans-serif;
+            color: #333;
+        }
+
+        .about-section h2 {
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .about-section h3 {
+            margin-top: 30px;
+            color: #444;
+        }
+
+        .about-section p {
+            text-align: justify;
+        }
+
+        .team-box {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .highlight {
+            color: #1a73e8;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 <form id="form1" runat="server">
 
-    <!-- Header Section -->
+    <!-- Header -->
     <div class="header">
-        <h1>🛒 My Shopping Cart</h1>
+        <h1>ShopEase</h1>
+        <ul class="nav">
+            <li><a href="Home.aspx">Home</a></li>
+            <li><a href="Products.aspx">Products</a></li>
+            <li><a href="Cart.aspx">Cart</a></li>
+            <li><a href="About.aspx">About</a></li>
+        </ul>
 
-        <!-- Login / Logout Links -->
-        <div style="float:right; margin-top:-40px;">
-            <asp:LoginView ID="LoginView1" runat="server">
-                <AnonymousTemplate>
-                    <a href="Login.aspx">Login</a> |
-                    <a href="Register.aspx">Register</a>
-                </AnonymousTemplate>
-                <LoggedInTemplate>
-                    Hello, <asp:LoginName ID="LoginName1" runat="server" /> |
-                    <asp:LinkButton ID="LogoutLink" runat="server" OnClick="Logout_Click">Logout</asp:LinkButton>
-                </LoggedInTemplate>
-            </asp:LoginView>
+
+        <div class="auth-links">
+            <asp:Panel ID="UserPanel" runat="server">
+                <asp:Label ID="lblUser" runat="server" Font-Bold="true"></asp:Label>
+                <asp:LinkButton ID="LogoutLink" runat="server" Text="Logout" OnClick="Logout_Click" />
+             </asp:Panel>
+
+            <asp:Panel ID="GuestPanel" runat="server">
+                <a href="Login.aspx">Login</a> |
+                <a href="Register.aspx">Register</a>
+             </asp:Panel>
+
         </div>
-
-        <div style="clear:both;"></div>
-
-        <!-- Navigation Menu -->
-        <asp:Menu ID="MainMenu" runat="server" Orientation="Horizontal">
-            <Items>
-                <asp:MenuItem Text="Home" NavigateUrl="~/Home.aspx" />
-                <asp:MenuItem Text="Products" NavigateUrl="~/Products.aspx" />
-                <asp:MenuItem Text="Cart" NavigateUrl="~/Cart.aspx" />
-            </Items>
-        </asp:Menu>
     </div>
 
-    <!-- Page Content -->
+    <!-- Content -->
     <div class="content">
         <asp:ContentPlaceHolder ID="MainContent" runat="server" />
     </div>
 
     <!-- Footer -->
     <div class="footer">
-        © 2025 Shopping Cart App
+        © 2025 MYSHOP | Developed by Varun Kumar & Mohan Raichand
     </div>
 
 </form>

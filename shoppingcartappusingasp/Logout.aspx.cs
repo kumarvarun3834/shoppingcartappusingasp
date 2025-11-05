@@ -11,7 +11,8 @@ namespace shoppingcartappusingasp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Session["User"] =null;
+            Session["Cart"] = null;
         }
     }
 }

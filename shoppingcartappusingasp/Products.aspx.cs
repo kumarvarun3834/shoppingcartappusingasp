@@ -12,6 +12,12 @@ namespace shoppingcartappusingasp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // ✅ Check for login
+            if (Session["User"] == null)
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
             if (!IsPostBack)
             {
                 BindProducts();
@@ -71,7 +77,6 @@ namespace shoppingcartappusingasp
             {
                 int productId = Convert.ToInt32(DataBinder.Eval(e.Item.DataItem, "ID"));
                 Label qtyLabel = (Label)e.Item.FindControl("QtyLabel");
-
                 HttpCookie cookie = Request.Cookies["Product_" + productId];
                 if (cookie != null && !string.IsNullOrEmpty(cookie.Value))
                 {
