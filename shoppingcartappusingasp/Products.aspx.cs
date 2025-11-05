@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Data;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Configuration;
 
@@ -34,15 +34,13 @@ namespace shoppingcartappusingasp
         {
             try
             {
-                string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                string connStr = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
                 using (SqlConnection con = new SqlConnection(connStr))
                 {
                     con.Open();
-
                     string query = "SELECT ID, Name, Price FROM Products ORDER BY ID";
                     SqlDataAdapter da = new SqlDataAdapter(query, con);
-
                     DataTable dt = new DataTable();
                     da.Fill(dt);
 
@@ -50,28 +48,45 @@ namespace shoppingcartappusingasp
                     {
                         ProductList.DataSource = dt;
                         ProductList.DataBind();
-
-                        // Save to session for cart reference
                         Session["Products"] = dt;
                     }
                     else
                     {
-                        // If no products, show placeholder
                         ProductList.DataSource = null;
                         ProductList.DataBind();
-
-                        // Optional: show a message if you have a Label control like lblMessage
                         lblMessage.Text = "No products available.";
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Handle any SQL or config errors gracefully
                 lblMessage.Text = "Error loading products: " + ex.Message;
             }
         }
 
+        protected void ProductList_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            // ✅ Restore quantity from cookie
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                int productId = Convert.ToInt32(DataBinder.Eval(e.Item.DataItem, "ID"));
+                Label qtyLabel = (Label)e.Item.FindControl("QtyLabel");
+
+                HttpCookie cookie = Request.Cookies["Product_" + productId];
+                if (cookie != null && !string.IsNullOrEmpty(cookie.Value))
+                {
+                    qtyLabel.Text = cookie.Value;
+                }
+                else
+                {
+                    qtyLabel.Text = "0";
+                }
+
+                Button removeBtn = (Button)e.Item.FindControl("RemoveBtn");
+                if (removeBtn != null)
+                    removeBtn.Enabled = qtyLabel.Text != "0";
+            }
+        }
 
         protected void ProductList_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
@@ -126,13 +141,19 @@ namespace shoppingcartappusingasp
                 }
             }
 
+            // ✅ Update label and remove button state
             qtyLabel.Text = currentQty.ToString();
-
             Button removeBtn = (Button)e.Item.FindControl("RemoveBtn");
             if (removeBtn != null)
                 removeBtn.Enabled = currentQty > 0;
 
+            // ✅ Update Session Cart
             Session["Cart"] = cart;
+
+            // ✅ Save quantity in cookie
+            HttpCookie cookie = new HttpCookie("Product_" + productId, currentQty.ToString());
+            cookie.Expires = DateTime.Now.AddDays(1);
+            Response.Cookies.Add(cookie);
         }
     }
 }

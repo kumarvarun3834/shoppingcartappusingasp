@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Available Products</h2>
 
-    <asp:Repeater ID="ProductList" runat="server" OnItemCommand="ProductList_ItemCommand">
+    <asp:Repeater ID="ProductList" runat="server" OnItemCommand="ProductList_ItemCommand" OnItemDataBound="ProductList_ItemDataBound">
     <ItemTemplate>
         <div class="product" style="margin-bottom:10px;">
             <strong><%# Eval("Name") %></strong> - ₹<%# Eval("Price") %>
