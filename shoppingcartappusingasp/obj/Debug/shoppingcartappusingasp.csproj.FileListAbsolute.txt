@@ -6,3 +6,4 @@ F:\dotnet\shoppingcartappusingasp\shoppingcartappusingasp\bin\shoppingcartappusi
 F:\dotnet\shoppingcartappusingasp\shoppingcartappusingasp\bin\shoppingcartappusingasp.pdb
 F:\dotnet\shoppingcartappusingasp\shoppingcartappusingasp\obj\Debug\shoppingcartappusingasp.dll
 F:\dotnet\shoppingcartappusingasp\shoppingcartappusingasp\obj\Debug\shoppingcartappusingasp.pdb
+F:\dotnet\shoppingcartappusingasp\shoppingcartappusingasp\obj\Debug\shoppingcartappusingasp.csprojResolveAssemblyReference.cache
