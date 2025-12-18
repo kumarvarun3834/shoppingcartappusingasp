@@ -67,9 +67,10 @@
         }
 
         /* Login/Logout Section */
-        .auth-links {
-            font-size: 14px;
-            font-weight: 500;
+        .auth-links a {
+            color: #000;
+            text-decoration: none;
+            margin: 0 6px;
         }
 
         .auth-links a, .auth-links asp\:LinkButton {
@@ -147,9 +148,7 @@
     <li><a href="<%= ResolveUrl("~/Products.aspx") %>">Products</a></li>
     <li><a href="<%= ResolveUrl("~/Cart.aspx") %>">Cart</a></li>
     <li><a href="<%= ResolveUrl("~/About.aspx") %>">About</a></li>
-</ul>
-
-
+        </ul>
 
         <div class="auth-links">
             <asp:Panel ID="UserPanel" runat="server">

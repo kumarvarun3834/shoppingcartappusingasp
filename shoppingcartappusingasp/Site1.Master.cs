@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Security;
 
 namespace shoppingcartappusingasp
 {
@@ -11,28 +12,37 @@ namespace shoppingcartappusingasp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName]; // .ASPXAUTH
+
+            if (authCookie != null)
             {
-                if (Session["User"] != null)
+                FormsAuthenticationTicket ticket =
+                    FormsAuthentication.Decrypt(authCookie.Value);
+
+                if (ticket != null && !ticket.Expired)
                 {
-                    lblUser.Text = "Hello, " + Session["User"].ToString();
+                    lblUser.Text = "Hello, " + ticket.Name;
                     UserPanel.Visible = true;
                     GuestPanel.Visible = false;
-                }
-                else
-                {
-                    UserPanel.Visible = false;
-                    GuestPanel.Visible = true;
+                    return;
                 }
             }
+
+            // Not logged in
+            UserPanel.Visible = false;
+            GuestPanel.Visible = true;
         }
 
         protected void Logout_Click(object sender, EventArgs e)
         {
-            Session["User"] = null;
+            // Sign out from Forms Authentication
+            FormsAuthentication.SignOut();
             Session["Cart"] = null;
+            // Clear session (cart, temp data, etc.)
             Session.Clear();
             Session.Abandon();
+
+            // Redirect to login page
             Response.Redirect("~/Account/Login.aspx");
         }
     }
