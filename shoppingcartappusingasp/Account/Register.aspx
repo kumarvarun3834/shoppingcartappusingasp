@@ -1,9 +1,6 @@
-﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
+﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site1.master" AutoEventWireup="true"
     CodeBehind="Register.aspx.cs" Inherits="shoppingcartappusingasp.Account.Register" %>
-
-<asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
-</asp:Content>
-<asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:CreateUserWizard ID="RegisterUser" runat="server" EnableViewState="false" OnCreatedUser="RegisterUser_CreatedUser">
         <LayoutTemplate>
             <asp:PlaceHolder ID="wizardStepPlaceholder" runat="server"></asp:PlaceHolder>

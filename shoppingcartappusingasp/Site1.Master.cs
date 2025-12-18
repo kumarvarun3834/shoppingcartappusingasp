@@ -33,7 +33,7 @@ namespace shoppingcartappusingasp
             Session["Cart"] = null;
             Session.Clear();
             Session.Abandon();
-            Response.Redirect("~/Login.aspx");
+            Response.Redirect("~/Account/Login.aspx");
         }
     }
 }

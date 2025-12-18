@@ -1,9 +1,7 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
+﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site1.master" AutoEventWireup="true"
     CodeBehind="Default.aspx.cs" Inherits="shoppingcartappusingasp._Default" %>
 
-<asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
-</asp:Content>
-<asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h2>
         Welcome to ASP.NET!
     </h2>

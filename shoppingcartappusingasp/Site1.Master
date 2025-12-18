@@ -143,11 +143,12 @@
     <div class="header">
         <h1>ShopEase</h1>
         <ul class="nav">
-            <li><a href="Home.aspx">Home</a></li>
-            <li><a href="Products.aspx">Products</a></li>
-            <li><a href="Cart.aspx">Cart</a></li>
-            <li><a href="About.aspx">About</a></li>
-        </ul>
+    <li><a href="<%= ResolveUrl("~/Home.aspx") %>">Home</a></li>
+    <li><a href="<%= ResolveUrl("~/Products.aspx") %>">Products</a></li>
+    <li><a href="<%= ResolveUrl("~/Cart.aspx") %>">Cart</a></li>
+    <li><a href="<%= ResolveUrl("~/About.aspx") %>">About</a></li>
+</ul>
+
 
 
         <div class="auth-links">
@@ -157,8 +158,8 @@
              </asp:Panel>
 
             <asp:Panel ID="GuestPanel" runat="server">
-                <a href="Login.aspx">Login</a> |
-                <a href="Register.aspx">Register</a>
+                <a href="Account/Login.aspx">Login</a> |
+                <a href="Account/Register.aspx">Register</a>
              </asp:Panel>
 
         </div>

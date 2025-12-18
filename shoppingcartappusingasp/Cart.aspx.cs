@@ -2,6 +2,8 @@
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web;                 // For HttpCookie, Request, Response
+using System.Web.Security;        // For FormsAuthentication, FormsAuthenticationTicket
 
 namespace shoppingcartappusingasp
 {
@@ -9,10 +11,13 @@ namespace shoppingcartappusingasp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // ✅ Check for login
-            if (Session["User"] == null)
+            // Check if the authentication cookie exists
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName]; // .ASPXAUTH
+
+            if (authCookie == null)
             {
-                Response.Redirect("Login.aspx");
+                // No cookie → user not logged in, redirect to login page
+                Response.Redirect("~/Account/Login.aspx");
                 return;
             }
 
