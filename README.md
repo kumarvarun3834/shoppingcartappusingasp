@@ -140,3 +140,17 @@ Each content page uses:
 | **Pages**       | Implement functionality (Home, Products, Cart) | `Products.aspx`, `Cart.aspx` |
 
 ---
+
+### Access Membership system 
+"C:\Windows\Microsoft.NET\Framework\v4.0.30319\aspnet_regsql.exe"
+### Setup 
+Use this in the aspnet_regsql wizard
+
+When it asks Server name, enter:
+
+".\SQLEXPRESS"
+
+
+Authentication:
+
+✅ Windows Authentication
